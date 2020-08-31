@@ -5,20 +5,12 @@ import os
 import leotoolbox
 import pandas as pd
 # Import from our lib
-from leotoolbox.lib import get_data, data_projection, data_reconstruction
+from leotoolbox.lib import weather_forecast, search_city_code
 import pytest
 
+def test_weather_forecast():
+    assert weather_forecast('Paris').shape == (6,15)
 
-def test_get_data():
-    faces = get_data()
-    assert faces.images.shape == (1288, 50, 37)
-    assert faces.data.shape == (1288, 1850)
-
-def test_data_projection():
-    faces = get_data()
-    assert data_projection(faces)[0].shape == (1288, 150)
-
-def test_data_reconstruction():
-    faces = get_data()
-    a,b = data_projection(faces)
-    assert data_reconstruction(a,b).shape == (1288, 1850)
+def test_search_city_code():
+    assert search_city_code('Paris') == 615702
+    assert search_city_code('London') == 44418
